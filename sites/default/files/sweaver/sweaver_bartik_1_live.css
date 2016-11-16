@@ -1,0 +1,24 @@
+.contextual-links-wrapper a {
+  font-family: 'Comic Sans MS',Cursive;
+  font-style: normal;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.content p {
+  background-color: transparent;
+}
+
+#name-and-slogan #site-slogan {
+  font-family: 'Comic Sans MS',Cursive;
+  background-color: #ff00d9;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-color: #0dff00;
+  border-right-color: #0dff00;
+  border-bottom-color: #0dff00;
+  border-left-color: #0dff00;
+}
+
