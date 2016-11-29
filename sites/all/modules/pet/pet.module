@@ -1,0 +1,22 @@
+<?php
+
+function pet_menu() {
+  $items = array(
+    'pet' => array(
+      'title' => 'Our Favorite Cat!',
+      'page callback' => 'pet_page',
+      'access callback' => TRUE,
+      'type' => MENU_NORMAL_ITEM
+    ),
+  );
+  return $items;
+}
+
+function pet_page() {
+  return '<a href="https://en.wikipedia.org/wiki/Persian_cat"><img class="cat_pic" src="sites/all/modules/pet/cat.jpg"></a>
+  <p>Look at that handsome face!</p>
+  <p>Our most valued employee!</p>
+  <img class="img_small" src="sites/all/modules/pet/catnap.gif">
+  <img class="img_small" src="sites/all/modules/pet/sits.gif">
+  <img class="cat_pic" src="sites/all/modules/pet/flying.gif">';
+}

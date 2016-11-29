@@ -1,0 +1,21 @@
+<?php
+
+  function hello_user_menu() {
+    $items = array(
+      'new_user_greeting' => array(
+        'title' => "Welcome to Camerone's!",
+        'page callback' => 'new_member_page',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+      ),
+    );
+    return $items;
+  }
+
+  function new_member_page() {
+    return '<p>Enjoy the coffee!</p>';
+  }
+
+  function hello_user_user_insert() {
+    $_GET['destination'] = 'new_user_greeting';
+  }
