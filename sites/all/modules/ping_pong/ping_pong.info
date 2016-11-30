@@ -1,0 +1,5 @@
+name = Ping Pong
+description = A useless module that counts every third and fifth number.
+package = My First Modules
+core = 7.x
+files[] = ping_pong.module

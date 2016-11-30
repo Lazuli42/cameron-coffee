@@ -1,0 +1,59 @@
+<?php
+
+function ping_pong_menu() {
+  $items['ping_pong'] = array(
+    'title' => 'Ping PONG',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ping_pong_form'),
+  );
+  $items['ping_pong_success'] = array(
+    'title' => 'Ping Pong',
+    'page callback' => 'ping_pong_success',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function ping_pong_form() {
+  $form['target_number'] = array(
+    '#title' => 'Ping Pong',
+    '#type' => 'textfield',
+    '#description' => t('Please enter a number.'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+  );
+
+  return $form;
+}
+
+function ping_pong_form_submit($form, &$form_state) {
+  $target_number = $form_state['values']['target_number'];
+  $all_numbers = array();
+
+  for ($i = 1; $i <= $target_number; $i++) {
+    if ($i % 5 === 0 && $i % 3 === 0) {
+      $all_numbers[] = "Fus Ro Dah!";
+    } else if ($i % 5 === 0 && $i % 3 != 0) {
+      $all_numbers[] = "Ro";
+    } else if ($i % 5 != 0 && $i % 3 === 0) {
+      $all_numbers[] = "Fus";
+    } else {
+      $all_numbers[] = $i;
+    }
+  }
+
+  $_SESSION['all_numbers'] = $all_numbers;
+
+  $form_state['redirect'] = 'ping_pong_success';
+}
+
+function ping_pong_success() {
+  $all_numbers = $_SESSION['all_numbers'];
+  return implode(" ", $all_numbers);
+}

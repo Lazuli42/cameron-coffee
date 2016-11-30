@@ -9,5 +9,6 @@
   }
 
   function comment_buddy_comment_delete() {
-    drupal_set_message("Bye.");
+    drupal_set_message("Bye.
+    ");
   }

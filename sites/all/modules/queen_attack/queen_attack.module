@@ -1,0 +1,98 @@
+<?php
+
+  function queen_attack_menu() {
+    $items['queen_attack'] = array(
+      'title' => 'Queen Attack',
+      'access callback' => TRUE,
+      'type' => MENU_NORMAL_ITEM,
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('queen_attack_form'),
+    );
+    $items['queen_attack_results'] = array(
+      'title' => 'Queen Attack',
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+      'page callback' => 'queen_attack_results',
+    );
+    return $items;
+  }
+
+  function queen_attack_form() {
+    $form['queen'] = array(
+      '#title' => "Queen's Position",
+      '#type' => 'textfield',
+      '#description' => "Enter the queen's coordinates (ie. B4).",
+    );
+    $form['target'] = array(
+      '#title' => "Target's Position",
+      '#type' => 'textfield',
+      '#description' => "Enter the coordinates of the piece you wish to take (ie. G6).",
+    );
+    $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => 'Submit',
+    );
+    return $form;
+  }
+
+  function queen_attack_form_submit($form, &$form_state) {
+    $columns = [0, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+
+    $queen_coordinates = $form_state['values']['queen'];
+    $queen_positions = str_split($queen_coordinates);
+    $queen_row = $queen_positions[1];
+    $queen_column = null;
+    for ($i = 0; $i <= 8; $i++) {
+      if ($columns[$i] === $queen_positions[0]) {
+        $queen_column = $i;
+      }
+    }
+
+    $target_coordinates = $form_state['values']['target'];
+    $target_positions = str_split($target_coordinates);
+    $target_row = $target_positions[1];
+    $target_column = null;
+    for ($i = 0; $i <= 8; $i++) {
+      if ($columns[$i] === $target_positions[0]) {
+        $target_column = $i;
+      }
+    }
+
+    $can_attack = null;
+    $index = 1;
+
+    if ($target_row === $queen_row || $target_column === $queen_column) {
+      $can_attack = true;
+    } else {
+      while($can_attack != true && $index <= 8) {
+        if ($target_row == ($queen_row+$index) && $target_column == ($queen_column+$index)) {
+          $can_attack = true;
+        } else if ($target_row == $queen_row-$index && $target_column == $queen_column-$index) {
+          $can_attack = true;
+        } else if ($target_row == $queen_row+$index && $target_column == $queen_column-$index) {
+          $can_attack = true;
+        } else if ($target_row == $queen_row-$index && $target_column == $queen_column+$index) {
+          $can_attack = true;
+        } else {
+          $can_attack = false;
+          $index++;
+        }
+      }
+    }
+    $_SESSION['can_attack'] = $can_attack;
+    $form_state['redirect'] = 'queen_attack_results';
+  }
+
+  function queen_attack_results() {
+    $can_attack = $_SESSION['can_attack'];
+    if($can_attack === 'you cannot attack'){
+      return 'error loop not found';
+    }
+    elseif ($can_attack) {
+      return 'The queen CAN attack this piece.';
+    } elseif($can_attack === false) {
+      return 'The queen CAN NOT attack this piece.';
+    } else {
+      return 'Queen doesnt exist';
+    }
+  }
