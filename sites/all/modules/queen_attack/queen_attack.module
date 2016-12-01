@@ -22,11 +22,16 @@
       '#title' => "Queen's Position",
       '#type' => 'textfield',
       '#description' => "Enter the queen's coordinates (ie. B4).",
+      '#required' => TRUE,
+      '#element_validate' => array('element_validate_coordinates'),
+
     );
     $form['target'] = array(
       '#title' => "Target's Position",
       '#type' => 'textfield',
       '#description' => "Enter the coordinates of the piece you wish to take (ie. G6).",
+      '#required' => TRUE,
+      '#element_validate' => array('element_validate_coordinates'),
     );
     $form['submit'] = array(
       '#type' => 'submit',
@@ -43,7 +48,7 @@
     $queen_row = $queen_positions[1];
     $queen_column = null;
     for ($i = 0; $i <= 8; $i++) {
-      if ($columns[$i] === $queen_positions[0]) {
+      if ($columns[$i] === strtolower($queen_positions[0])) {
         $queen_column = $i;
       }
     }
@@ -53,7 +58,7 @@
     $target_row = $target_positions[1];
     $target_column = null;
     for ($i = 0; $i <= 8; $i++) {
-      if ($columns[$i] === $target_positions[0]) {
+      if ($columns[$i] === strtolower($target_positions[0])) {
         $target_column = $i;
       }
     }
@@ -95,4 +100,17 @@
     } else {
       return 'Queen doesnt exist';
     }
+  }
+
+  function element_validate_coordinates($element){
+      $columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+      if(strlen($element['#value']) != 2){
+        form_error($element, t('Input must be one letter followed by one number.'));
+      }
+      else if (in_array(strtolower($element['#value']{0}),$columns) != TRUE){
+        form_error($element, t('First character must be a letter between A and H'));
+      }
+      else if (intval($element['#value']{1}) <= 0 || intval($element['#value']{1}) >= 9 ){
+        form_error($element, t('Second character must be a number between 1 and 8'));
+      }
   }
