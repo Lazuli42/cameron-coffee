@@ -1,0 +1,41 @@
+body {
+  background-color: #eff5fd;
+}
+
+#block-views-navigation-block {
+  background-color: white;
+  border-radius: 4px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+
+#block-views-navigation-block a {
+  color: orange;
+  text-decoration: none;
+}
+#block-views-navigation-block a:hover {
+  text-decoration: underline;
+}
+
+#block-views-navigation-block a:visited {
+  color: orange;
+}
+
+.header {
+  background: white;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.region-mine {
+  background-color: white;
+  padding: 1% 1% 1% 1%;
+  text-align: center;
+}
+
+.layout-center {
+  margin-left: 0;
+  margin-right: 0;
+}
